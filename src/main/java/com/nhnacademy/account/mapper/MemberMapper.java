@@ -48,6 +48,5 @@ public class MemberMapper {
 
         return dto;
     }
-
 }
 
