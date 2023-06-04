@@ -1,19 +1,20 @@
 /**
  * packageName :  com.nhnacademy.account.entity
- * fileName : UserStatus
+ * fileName : MemberStatus
  * author :  ichunghui
- * date : 2023/06/02 
+ * date : 2023/06/04 
  * description :
  * ===========================================================
  * DATE                 AUTHOR                NOTE
  * -----------------------------------------------------------
- * 2023/06/02                ichunghui             최초 생성
+ * 2023/06/04                ichunghui             최초 생성
  */
 
 package com.nhnacademy.account.entity;
 
-public enum UserStatus {
+public enum MemberStatus {
     ACTIVE,
     INACTIVE,
     SUSPENDED
 }
+

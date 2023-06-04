@@ -1,22 +1,30 @@
 /**
  * packageName :  com.nhnacademy.account.dto
- * fileName : UserResponseDto
+ * fileName : MemberCreateDto
  * author :  ichunghui
- * date : 2023/06/02
+ * date : 2023/06/04 
  * description :
  * ===========================================================
  * DATE                 AUTHOR                NOTE
  * -----------------------------------------------------------
- * 2023/06/02                ichunghui             최초 생성
+ * 2023/06/04                ichunghui             최초 생성
  */
+
 package com.nhnacademy.account.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 @Data
-public class UserResponseDto {
-    private Long id;
+public class MemberCreateDto {
+    @NotNull
     private String name;
+
+    @NotNull
     private String email;
-    private String status;
+
+    @NotNull
+    private String password;
 }
+
