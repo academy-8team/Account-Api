@@ -1,34 +1,36 @@
 /**
  * packageName :  com.nhnacademy.account.entity
- * fileName : User
+ * fileName : Member
  * author :  ichunghui
- * date : 2023/06/02 
+ * date : 2023/06/04 
  * description :
  * ===========================================================
  * DATE                 AUTHOR                NOTE
  * -----------------------------------------------------------
- * 2023/06/02                ichunghui             최초 생성
+ * 2023/06/04                ichunghui             최초 생성
  */
 
 package com.nhnacademy.account.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Entity
 @Getter
 @Setter
-@Table(name = "users")
-public class User {
+@Entity
+@Table(name = "members")
+@EntityListeners(AuditingEntityListener.class)
+public class Member extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "users_id", nullable = false)
+    @Column(name = "member_id", nullable = false)
     private Long id;
 
     @NotEmpty
@@ -43,5 +45,6 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserStatus userStatus;
+    private MemberStatus memberStatus;
 }
+

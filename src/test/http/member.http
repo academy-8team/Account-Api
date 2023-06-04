@@ -1,0 +1,25 @@
+###
+POST /members/register HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "이충희",
+  "email": "choonghee123@gmail.com",
+  "password": "1q2w3e4r"
+}
+
+###
+PUT /members/{memberId}/status HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+"name": "이충희",
+"email": "choonghee123@gmail.com",
+"password": "1q2w3e4r!@"
+}
+
+###
+GET /members/{memberId} HTTP/1.1
+Host: localhost:8080
