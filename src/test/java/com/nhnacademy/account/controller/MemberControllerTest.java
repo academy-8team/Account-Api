@@ -1,12 +1,9 @@
 package com.nhnacademy.account.controller;
 
-import com.nhnacademy.account.dto.MemberCreateDto;
 import com.nhnacademy.account.dto.MemberResponseDto;
-import com.nhnacademy.account.dto.MemberUpdateDto;
 import com.nhnacademy.account.entity.Member;
 import com.nhnacademy.account.entity.MemberStatus;
 import com.nhnacademy.account.repository.MemberRepository;
-import com.nhnacademy.account.service.MemberService;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.boot.test.context.SpringBootTest;
 

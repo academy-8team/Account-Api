@@ -12,7 +12,10 @@
 
 package com.nhnacademy.account.controller;
 
-import com.nhnacademy.account.dto.*;
+port com.nhnacademy.account.dto.*;
+import com.nhnacademy.account.dto.MemberCreateDto;
+import com.nhnacademy.account.dto.MemberResponseDto;
+import com.nhnacademy.account.dto.MemberUpdateDto;
 import com.nhnacademy.account.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -67,3 +70,4 @@ public class MemberController {
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 }
+im

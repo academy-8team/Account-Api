@@ -16,18 +16,14 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
+@Builder
 @Data
+@AllArgsConstructor
 public class MemberResponseDto {
-    @NotNull
-    private Long id;
-
-    @NotNull
-    private String name;
-
-    @NotNull
-    private String email;
-
-    @NotNull
-    private String status;
+    private Long memberNum;
+    private String memberId;
+    private String memberPassword;
+    private String memberEmail;
+    private MemberGrade memberGrade;
+    private MemberState memberState;
 }
-

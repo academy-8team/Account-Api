@@ -31,7 +31,7 @@ public class Member extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_id", nullable = false)
-    private Long id;
+    private Long memberId;
 
     @NotEmpty
     @Size(min=2, max=50)
