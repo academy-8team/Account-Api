@@ -1,32 +1,28 @@
 /**
  * packageName :  com.nhnacademy.account.entity
- * fileName : MemberStatus
+ * fileName : MemberGrade
  * author :  ichunghui
- * date : 2023/06/04 
+ * date : 2023/06/06 
  * description :
  * ===========================================================
  * DATE                 AUTHOR                NOTE
  * -----------------------------------------------------------
- * 2023/06/04                ichunghui             최초 생성
+ * 2023/06/06                ichunghui             최초 생성
  */
 
 package com.nhnacademy.account.entity;
 
-public enum MemberStatus {
-    MEMBER_MEMBERSHIP {
+public enum MemberGrade {
+    ROLE_ADMIN {
         @Override
         public String toString() {
-            return "MEBER_MEMBERSHIP";
+            return "ROLE_ADMIN";
         }
-    }, MEMBER_WITHDRAW {
+    }
+    , ROLE_USER {
         @Override
         public String toString() {
-            return "MEMBER_WITHDRAW";
-        }
-    }, MEMBER_DORMANT {
-        @Override
-        public String toString() {
-            return "MEMBER_DORMANT";
+            return "ROLE_USER";
         }
     }
 }

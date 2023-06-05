@@ -1,39 +1,42 @@
 /**
  * packageName :  com.nhnacademy.account.dto
- * fileName : MemberResponseDto
+ * fileName : MemberRequestDto
  * author :  ichunghui
- * date : 2023/06/04 
+ * date : 2023/06/06
  * description :
  * ===========================================================
  * DATE                 AUTHOR                NOTE
  * -----------------------------------------------------------
- * 2023/06/04                ichunghui             최초 생성
+ * 2023/06/06                ichunghui             최초 생성
  */
 
 package com.nhnacademy.account.dto;
 
 import com.nhnacademy.account.entity.MemberGrade;
 import com.nhnacademy.account.entity.MemberStatus;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Builder
 @Data
-@AllArgsConstructor
-public class MemberResponseDto {
+public class MemberRequestDto {
 
-    private Long memberNum;
-
+    @NotBlank(message = "ID를 입력하세요")
     private String memberId;
 
+    @NotBlank(message = "Password를 입력하세요")
     private String memberPassword;
 
+    @Email(message = "email 형식을 지켜주세요.")
     private String memberEmail;
 
     private MemberGrade memberGrade;
 
     private MemberStatus memberStatus;
 }
+
+
