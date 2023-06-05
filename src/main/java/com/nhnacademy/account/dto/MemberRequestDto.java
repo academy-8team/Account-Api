@@ -2,7 +2,7 @@
  * packageName :  com.nhnacademy.account.dto
  * fileName : MemberRequestDto
  * author :  ichunghui
- * date : 2023/06/06 
+ * date : 2023/06/06
  * description :
  * ===========================================================
  * DATE                 AUTHOR                NOTE
@@ -12,6 +12,31 @@
 
 package com.nhnacademy.account.dto;
 
+import com.nhnacademy.account.entity.MemberGrade;
+import com.nhnacademy.account.entity.MemberStatus;
+import lombok.Builder;
+import lombok.Data;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+@Builder
+@Data
 public class MemberRequestDto {
+
+    @NotBlank(message = "ID를 입력하세요")
+    private String memberId;
+
+    @NotBlank(message = "Password를 입력하세요")
+    private String memberPassword;
+
+    @Email(message = "email 형식을 지켜주세요.")
+    private String memberEmail;
+
+    private MemberGrade memberGrade;
+
+    private MemberStatus memberStatus;
 }
+
 

@@ -12,6 +12,10 @@
 
 package com.nhnacademy.account.dto;
 
+import com.nhnacademy.account.entity.MemberGrade;
+import com.nhnacademy.account.entity.MemberStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -20,10 +24,16 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 public class MemberResponseDto {
+
     private Long memberNum;
+
     private String memberId;
+
     private String memberPassword;
+
     private String memberEmail;
+
     private MemberGrade memberGrade;
-    private MemberState memberState;
+
+    private MemberStatus memberStatus;
 }
