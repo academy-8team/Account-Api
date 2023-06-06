@@ -16,14 +16,13 @@ import com.nhnacademy.account.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
+
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    /**
-     * @param email 사용자를 찾기 위한 메일
-     * @return 찾아진 사용자에 대한 Optional객체. 사용자가 존재하지 않으면 null 값을 가진 Optional객체를 반환한다.
-     */
-    Optional<Member> findByEmail(String email);
+    Member findByMemberId(String memberId);
+    Member findByMemberEmail(String email);
+    List<Member> findAllBy();
 }
-
+// 마르코님한테  질문, Dto의 사용범위는 어디까지인가? Controller와 Service의 사이에서만 사용해야하는가
