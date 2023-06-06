@@ -2,7 +2,7 @@
  * packageName :  com.nhnacademy.account.service
  * fileName : MemberService
  * author :  ichunghui
- * date : 2023/06/04 
+ * date : 2023/06/04
  * description :
  * ===========================================================
  * DATE                 AUTHOR                NOTE
@@ -22,7 +22,9 @@ public interface MemberService {
     Optional<MemberResponseDto> getMemberByMemberId(String memberId);
 
     Optional<MemberResponseDto> findMemberHaveEmail(String email);
+
     List<MemberResponseDto> findAllMember();
+
     String register(MemberRequestDto memberRequestDto);
 
     boolean validCheck(BindingResult errors);
