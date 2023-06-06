@@ -16,12 +16,12 @@ import com.nhnacademy.account.dto.MemberRequestDto;
 import com.nhnacademy.account.dto.MemberResponseDto;
 import com.nhnacademy.account.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -29,22 +29,26 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/member")
-    public Optional<MemberResponseDto> getMember(@RequestParam(value = "username") String memberId) {
-        return memberService.getMemberByMemberId(memberId);
+    public ResponseEntity<MemberResponseDto> getMember(@RequestParam(value = "username") String memberId) {
+        return memberService.getMemberByMemberId(memberId)
+                .map(member -> ResponseEntity.ok().body(member))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/member/exist")
-    public Optional<MemberResponseDto> checkMemberHaveEmail(@RequestParam(value = "email") String email) {
-        return memberService.findMemberHaveEmail(email);
+    public ResponseEntity<MemberResponseDto> checkMemberHaveEmail(@RequestParam(value = "email") String email) {
+        return memberService.findMemberHaveEmail(email)
+                .map(member -> ResponseEntity.ok().body(member))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/member/register")
-    public String registerMember(@RequestBody @Valid MemberRequestDto memberRequestDto, BindingResult errors) {
+    public ResponseEntity<String> registerMember(@RequestBody @Valid MemberRequestDto memberRequestDto, BindingResult errors) {
         if (memberService.validCheck(errors)) {
-            return memberService.makeErrorMessage(errors);
+            return ResponseEntity.badRequest().body(memberService.makeErrorMessage(errors));
         }
 
-        return memberService.register(memberRequestDto);
+        return ResponseEntity.ok().body(memberService.register(memberRequestDto));
     }
 
     @GetMapping("/member/all")

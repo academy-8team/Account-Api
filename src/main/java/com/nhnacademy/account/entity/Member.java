@@ -21,6 +21,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
