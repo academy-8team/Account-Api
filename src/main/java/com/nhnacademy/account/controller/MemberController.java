@@ -12,62 +12,47 @@
 
 package com.nhnacademy.account.controller;
 
-port com.nhnacademy.account.dto.*;
-import com.nhnacademy.account.dto.MemberCreateDto;
+import com.nhnacademy.account.dto.MemberRequestDto;
 import com.nhnacademy.account.dto.MemberResponseDto;
-import com.nhnacademy.account.dto.MemberUpdateDto;
 import com.nhnacademy.account.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 회원 관리를 위한 컨트롤러 클래스입니다.
- * 이 클래스는 회원의 생성, 수정, 조회를 담당합니다.
- */
-@RestController
-@RequestMapping("/members")
+import javax.validation.Valid;
+import java.util.List;
+
 @RequiredArgsConstructor
+@RestController
 public class MemberController {
     private final MemberService memberService;
 
-    /**
-     * 회원을 등록하는 메서드입니다.
-     *
-     * @param createDto 회원 정보를 담은 Dto 객체
-     * @return 회원 정보를 담은 응답 Dto와 HTTP 상태 코드 CREATED를 반환합니다.
-     */
-    @PostMapping("/register")
-    public ResponseEntity<MemberResponseDto> registerMember(@RequestBody MemberCreateDto createDto) {
-        MemberResponseDto member = memberService.registerMember(createDto);
-        return new ResponseEntity<>(member, HttpStatus.CREATED);
+    @GetMapping("/member")
+    public ResponseEntity<MemberResponseDto> getMember(@RequestParam(value = "username") String memberId) {
+        return memberService.getMemberByMemberId(memberId)
+                .map(member -> ResponseEntity.ok().body(member))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    /**
-     * 회원의 상태를 변경하는 메서드입니다.
-     *
-     * @param memberId 상태를 변경할 회원의 식별자
-     * @param updateDto 회원 상태 정보를 담은 Dto 객체
-     * @return 변경 완료 후 HTTP 상태 코드 OK를 반환합니다.
-     */
-    @PutMapping("/{memberId}/status")
-    public ResponseEntity<Void> updateMemberStatus(@PathVariable Long memberId, @RequestBody MemberUpdateDto updateDto) {
-        memberService.updateMemberStatus(memberId, updateDto);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);  // change from OK to NO_CONTENT
+    @GetMapping("/member/exist")
+    public ResponseEntity<MemberResponseDto> checkMemberHaveEmail(@RequestParam(value = "email") String email) {
+        return memberService.findMemberHaveEmail(email)
+                .map(member -> ResponseEntity.ok().body(member))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PostMapping("/member/register")
+    public ResponseEntity<String> registerMember(@RequestBody @Valid MemberRequestDto memberRequestDto, BindingResult errors) {
+        if (memberService.validCheck(errors)) {
+            return ResponseEntity.badRequest().body(memberService.makeErrorMessage(errors));
+        }
 
-    /**
-     * 회원을 조회하는 메서드입니다.
-     *
-     * @param memberId 조회할 회원의 식별자
-     * @return 회원 정보를 담은 응답 Dto와 HTTP 상태 코드 OK를 반환합니다.
-     */
-    @GetMapping("/{memberId}")
-    public ResponseEntity<MemberResponseDto> getMember(@PathVariable Long memberId) {
-        MemberResponseDto member = memberService.getMember(memberId);
-        return new ResponseEntity<>(member, HttpStatus.OK);
+        return ResponseEntity.ok().body(memberService.register(memberRequestDto));
+    }
+
+    @GetMapping("/member/all")
+    public List<MemberResponseDto> findAllMember() {
+        return memberService.findAllMember();
     }
 }
-im
