@@ -2,7 +2,7 @@
  * packageName :  com.nhnacademy.account.dto
  * fileName : MemberResponseDto
  * author :  ichunghui
- * date : 2023/06/04 
+ * date : 2023/06/04
  * description :
  * ===========================================================
  * DATE                 AUTHOR                NOTE

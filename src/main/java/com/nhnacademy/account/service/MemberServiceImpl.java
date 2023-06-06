@@ -17,8 +17,8 @@ import com.nhnacademy.account.dto.MemberResponseDto;
 import com.nhnacademy.account.entity.Member;
 import com.nhnacademy.account.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -33,12 +33,14 @@ import java.util.stream.Collectors;
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
+    @Transactional
     @Override
     public Optional<MemberResponseDto> getMemberByMemberId(String memberId) {
         return Optional.ofNullable(memberRepository.findByMemberId(memberId))
                 .map(MemberResponseDto::of);
     }
 
+    @Transactional
     @Override
     public Optional<MemberResponseDto> findMemberHaveEmail(String email) {
         return Optional.ofNullable(memberRepository.findByMemberEmail(email))
@@ -46,6 +48,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
+    @Transactional
     @Override
     public String register(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
@@ -61,17 +64,20 @@ public class MemberServiceImpl implements MemberService {
         return "회원가입 되었습니다.";
     }
 
+    @Transactional
     @Override
     public boolean validCheck(BindingResult errors) {
         return errors.hasErrors();
     }
 
+    @Transactional
     @Override
     public String makeErrorMessage(BindingResult errors) {
         Map<String, String> validatorResult = validateHandling(errors);
         return validatorResult.keySet().stream().findFirst().map(validatorResult::get).orElse("");
     }
 
+    @Transactional
     @Override
     public List<MemberResponseDto> findAllMember() {
         return memberRepository.findAllBy()

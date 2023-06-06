@@ -2,7 +2,7 @@
  * packageName :  com.nhnacademy.account.entity
  * fileName : Member
  * author :  ichunghui
- * date : 2023/06/04 
+ * date : 2023/06/04
  * description :
  * ===========================================================
  * DATE                 AUTHOR                NOTE
@@ -22,7 +22,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-public class Member extends BaseTimeEntity{
+public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberNum;
