@@ -13,15 +13,11 @@
 package com.nhnacademy.account.entity;
 
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
 
 @Builder
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
