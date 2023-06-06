@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 @Service
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<MemberResponseDto> getMemberByMemberId(String memberId) {
@@ -51,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
     public String register(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
                 .memberId(memberRequestDto.getMemberId())
-                .memberPassword(passwordEncoder.encode(memberRequestDto.getMemberPassword()))
+                .memberPassword(memberRequestDto.getMemberPassword())
                 .memberEmail(memberRequestDto.getMemberEmail())
                 .memberGrade(memberRequestDto.getMemberGrade())
                 .memberStatus(memberRequestDto.getMemberStatus())
