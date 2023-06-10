@@ -18,10 +18,11 @@ import javax.persistence.*;
 
 
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table(name = "members")
 public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +34,12 @@ public class Member extends BaseTimeEntity {
     private MemberGrade memberGrade;
     @Enumerated(EnumType.STRING)
     private MemberStatus memberStatus;
+
+    public void updateMemberInfo(String memberId, String memberPassword, String memberEmail, MemberGrade memberGrade, MemberStatus memberStatus) {
+        this.memberId = memberId;
+        this.memberPassword = memberPassword;
+        this.memberEmail = memberEmail;
+        this.memberGrade = memberGrade;
+        this.memberStatus = memberStatus;
+    }
 }

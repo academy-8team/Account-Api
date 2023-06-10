@@ -21,14 +21,15 @@ import java.util.Optional;
 public interface MemberService {
     Optional<MemberResponseDto> getMemberByMemberId(String memberId);
 
-    Optional<MemberResponseDto> findMemberHaveEmail(String email);
-
     List<MemberResponseDto> findAllMember();
 
     String register(MemberRequestDto memberRequestDto);
 
+    String updateMember(String memberId, MemberRequestDto memberRequestDto);
+
+    void deleteMember(String memberId);
+
     boolean validCheck(BindingResult errors);
 
     String makeErrorMessage(BindingResult errors);
-
 }

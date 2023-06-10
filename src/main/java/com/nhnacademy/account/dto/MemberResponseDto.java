@@ -15,12 +15,12 @@ package com.nhnacademy.account.dto;
 import com.nhnacademy.account.entity.Member;
 import com.nhnacademy.account.entity.MemberGrade;
 import com.nhnacademy.account.entity.MemberStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 @Builder
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
 public class MemberResponseDto {
 

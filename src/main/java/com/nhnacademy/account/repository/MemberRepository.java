@@ -24,5 +24,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByMemberId(String memberId);
     Member findByMemberEmail(String email);
     List<Member> findAllBy();
+    void deleteByMemberId(String memberId);
 }
-// 마르코님한테  질문, Dto의 사용범위는 어디까지인가? Controller와 Service의 사이에서만 사용해야하는가

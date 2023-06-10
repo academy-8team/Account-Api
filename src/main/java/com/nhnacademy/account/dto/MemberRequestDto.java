@@ -14,14 +14,16 @@ package com.nhnacademy.account.dto;
 
 import com.nhnacademy.account.entity.MemberGrade;
 import com.nhnacademy.account.entity.MemberStatus;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-@Builder
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberRequestDto {
 
     @NotBlank(message = "ID를 입력하세요")
@@ -33,9 +35,9 @@ public class MemberRequestDto {
     @Email(message = "email 형식을 지켜주세요.")
     private String memberEmail;
 
+    @NotNull(message = "멤버 등급을 선택하세요")
     private MemberGrade memberGrade;
 
+    @NotNull(message = "멤버 상태를 선택하세요")
     private MemberStatus memberStatus;
 }
-
-

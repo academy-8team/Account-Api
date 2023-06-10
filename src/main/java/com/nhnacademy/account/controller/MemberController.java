@@ -14,6 +14,7 @@ package com.nhnacademy.account.controller;
 
 import com.nhnacademy.account.dto.MemberRequestDto;
 import com.nhnacademy.account.dto.MemberResponseDto;
+import com.nhnacademy.account.exception.InvalidInputException;
 import com.nhnacademy.account.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,34 +26,47 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/members")
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/member")
-    public ResponseEntity<MemberResponseDto> getMember(@RequestParam(value = "username") String memberId) {
-        return memberService.getMemberByMemberId(memberId)
-                .map(member -> ResponseEntity.ok().body(member))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/member/exist")
-    public ResponseEntity<MemberResponseDto> checkMemberHaveEmail(@RequestParam(value = "email") String email) {
-        return memberService.findMemberHaveEmail(email)
-                .map(member -> ResponseEntity.ok().body(member))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PostMapping("/member/register")
-    public ResponseEntity<String> registerMember(@RequestBody @Valid MemberRequestDto memberRequestDto, BindingResult errors) {
-        if (memberService.validCheck(errors)) {
-            return ResponseEntity.badRequest().body(memberService.makeErrorMessage(errors));
+    // 멤버 가입
+    @PostMapping
+    public ResponseEntity<String> registerMember(@RequestBody @Valid MemberRequestDto memberRequestDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new InvalidInputException(bindingResult);
         }
-
         return ResponseEntity.ok().body(memberService.register(memberRequestDto));
     }
 
-    @GetMapping("/member/all")
-    public List<MemberResponseDto> findAllMember() {
-        return memberService.findAllMember();
+
+    // 멤버 목록 조회
+    @GetMapping
+    public ResponseEntity<List<MemberResponseDto>> getAllMembers() {
+        return ResponseEntity.ok().body(memberService.findAllMember());
+    }
+
+    // 멤버 상세 내용 조회
+    @GetMapping("/{memberId}")
+    public ResponseEntity<MemberResponseDto> getMember(@PathVariable String memberId) {
+        return memberService.getMemberByMemberId(memberId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // 멤버 정보 수정
+    @PutMapping("/{memberId}")
+    public ResponseEntity<String> updateMember(@PathVariable String memberId, @RequestBody @Valid MemberRequestDto memberRequestDto, BindingResult errors) {
+        if (memberService.validCheck(errors)) {
+            return ResponseEntity.badRequest().body(memberService.makeErrorMessage(errors));
+        }
+        return ResponseEntity.ok().body(memberService.updateMember(memberId, memberRequestDto));
+    }
+
+    // 멤버 삭제
+    @DeleteMapping("/{memberId}")
+    public ResponseEntity<Void> deleteMember(@PathVariable String memberId) {
+        memberService.deleteMember(memberId);
+        return ResponseEntity.noContent().build();
     }
 }
