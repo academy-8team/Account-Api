@@ -16,7 +16,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-
 @Builder
 @Getter
 @NoArgsConstructor
@@ -26,10 +25,18 @@ import javax.persistence.*;
 public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_num")
     private Long memberNum;
+
+    @Column(name = "member_id")
     private String memberId;
+
+    @Column(name = "member_password")
     private String memberPassword;
+
+    @Column(name = "member_email")
     private String memberEmail;
+
     @Enumerated(EnumType.STRING)
     private MemberGrade memberGrade;
     @Enumerated(EnumType.STRING)
