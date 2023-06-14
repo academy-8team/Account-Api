@@ -1,19 +1,7 @@
-/**
- * packageName :  com.nhnacademy.account.service
- * fileName : MemberServiceImpl
- * author :  ichunghui
- * date : 2023/06/06
- * description :
- * ===========================================================
- * DATE                 AUTHOR                NOTE
- * -----------------------------------------------------------
- * 2023/06/06                ichunghui             최초 생성
- */
-
 package com.nhnacademy.account.service.impl;
 
-import com.nhnacademy.account.dto.MemberRequestDto;
-import com.nhnacademy.account.dto.MemberRespondDto;
+import com.nhnacademy.account.dto.request.MemberRequestDto;
+import com.nhnacademy.account.dto.respond.MemberRespondDto;
 import com.nhnacademy.account.entity.Member;
 import com.nhnacademy.account.entity.MemberGrade;
 import com.nhnacademy.account.entity.MemberState;
@@ -21,7 +9,6 @@ import com.nhnacademy.account.repository.MemberRepository;
 import com.nhnacademy.account.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -29,15 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-@Transactional
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
-    @Transactional(readOnly = true)
     @Override
     public Optional<MemberRespondDto> getMemberByMemberId(String memberId) {
         return Optional.ofNullable(memberRepository.findByMemberId(memberId));
@@ -51,21 +35,16 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String register(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
-                .memberId(memberRequestDto.getMemberId())
-                .memberPassword(memberRequestDto.getMemberPassword())
-                .memberEmail(memberRequestDto.getMemberEmail())
-                .memberGrade(MemberGrade.ROLE_USER)
-                .memberState(MemberState.MEMBER_MEMBERSHIP)
-                .build();
+            .memberId(memberRequestDto.getMemberId())
+            .memberPassword(memberRequestDto.getMemberPassword())
+            .memberEmail(memberRequestDto.getMemberEmail())
+            .memberGrade(MemberGrade.ROLE_USER)
+            .memberState(MemberState.MEMBER_MEMBERSHIP)
+            .build();
 
         memberRepository.save(member);
 
         return "회원가입 되었습니다.";
-    }
-
-    @Override
-    public List<MemberRespondDto> findAllMember() {
-        return memberRepository.findAllBy();
     }
 
     @Override
@@ -75,14 +54,17 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public String makeErrorMessage(BindingResult errors) {
-        String errorMessage;
         Map<String, String> validatorResult = validateHandling(errors);
+        for (String key : validatorResult.keySet()) {
+            return validatorResult.get(key);
+        }
 
-        errorMessage = validatorResult.keySet()
-                .stream().map(key -> key + ": " + validatorResult.get(key) + "; ")
-                .collect(Collectors.joining());
+        return "";
+    }
 
-        return errorMessage;
+    @Override
+    public List<MemberRespondDto> findAllMember() {
+        return memberRepository.findAllBy();
     }
 
     private Map<String, String> validateHandling(BindingResult errors) {
