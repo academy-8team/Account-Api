@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import com.nhnacademy.account.entity.Member;
 import com.nhnacademy.account.entity.MemberGrade;
-import com.nhnacademy.account.entity.MemberStatus;
+import com.nhnacademy.account.entity.MemberState;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class MemberRepositoryTest {
                 .memberPassword("testPassword")
                 .memberEmail("test@email.com")
                 .memberGrade(MemberGrade.ROLE_USER)
-                .memberStatus(MemberStatus.MEMBER_MEMBERSHIP)
+                .memberState(MemberState.MEMBER_MEMBERSHIP)
                 .build();
 
         memberRepository.save(member);

@@ -11,7 +11,7 @@ import com.nhnacademy.account.dto.MemberRequestDto;
 import com.nhnacademy.account.dto.MemberResponseDto;
 import com.nhnacademy.account.entity.Member;
 import com.nhnacademy.account.entity.MemberGrade;
-import com.nhnacademy.account.entity.MemberStatus;
+import com.nhnacademy.account.entity.MemberState;
 import com.nhnacademy.account.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,10 +41,10 @@ class MemberServiceImplTest {
                 .memberPassword("testPassword")
                 .memberEmail("test@email.com")
                 .memberGrade(MemberGrade.ROLE_USER)
-                .memberStatus(MemberStatus.MEMBER_MEMBERSHIP)
+                .memberState(MemberState.MEMBER_MEMBERSHIP)
                 .build();
 
-        memberRequestDto = new MemberRequestDto("testId", "testPassword", "test@email.com", MemberGrade.ROLE_USER, MemberStatus.MEMBER_MEMBERSHIP);
+        memberRequestDto = new MemberRequestDto("testId", "testPassword", "test@email.com", MemberGrade.ROLE_USER, MemberState.MEMBER_MEMBERSHIP);
     }
 
     @Test

@@ -19,17 +19,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberService {
-    Optional<MemberResponseDto> getMemberByMemberId(String memberId);
+    Optional<MemberRespondDto> getMemberByMemberId(String memberId);
 
-    List<MemberResponseDto> findAllMember();
+    Optional<MemberRespondDto> findMemberHaveEmail(String email);
 
     String register(MemberRequestDto memberRequestDto);
-
-    String updateMember(String memberId, MemberRequestDto memberRequestDto);
-
-    void deleteMember(String memberId);
 
     boolean validCheck(BindingResult errors);
 
     String makeErrorMessage(BindingResult errors);
+
+    List<MemberRespondDto> findAllMember();
 }

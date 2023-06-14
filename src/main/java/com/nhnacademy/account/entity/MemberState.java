@@ -1,6 +1,6 @@
 /**
  * packageName :  com.nhnacademy.account.entity
- * fileName : MemberStatus
+ * fileName : MemberState
  * author :  ichunghui
  * date : 2023/06/04 
  * description :
@@ -12,7 +12,7 @@
 
 package com.nhnacademy.account.entity;
 
-public enum MemberStatus {
+public enum MemberState {
     MEMBER_MEMBERSHIP {
         @Override
         public String toString() {

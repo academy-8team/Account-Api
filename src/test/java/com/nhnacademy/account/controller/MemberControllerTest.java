@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.account.dto.MemberRequestDto;
 import com.nhnacademy.account.dto.MemberResponseDto;
 import com.nhnacademy.account.entity.MemberGrade;
-import com.nhnacademy.account.entity.MemberStatus;
+import com.nhnacademy.account.entity.MemberState;
 import com.nhnacademy.account.service.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ class MemberControllerTest {
         memberRequestDto.setMemberPassword("testPassword");
         memberRequestDto.setMemberEmail("test@email.com");
         memberRequestDto.setMemberGrade(MemberGrade.ROLE_USER);
-        memberRequestDto.setMemberStatus(MemberStatus.MEMBER_MEMBERSHIP);
+        memberRequestDto.setMemberStatus(MemberState.MEMBER_MEMBERSHIP);
     }
 
     @Test
@@ -64,7 +64,7 @@ class MemberControllerTest {
                 .memberId("testId")
                 .memberEmail("test@email.com")
                 .memberGrade(MemberGrade.ROLE_USER)
-                .memberStatus(MemberStatus.MEMBER_MEMBERSHIP)
+                .memberStatus(MemberState.MEMBER_MEMBERSHIP)
                 .build();
 
         when(memberService.findAllMember()).thenReturn(Collections.singletonList(responseDto));
@@ -80,7 +80,7 @@ class MemberControllerTest {
                 .memberId("testId")
                 .memberEmail("test@email.com")
                 .memberGrade(MemberGrade.ROLE_USER)
-                .memberStatus(MemberStatus.MEMBER_MEMBERSHIP)
+                .memberStatus(MemberState.MEMBER_MEMBERSHIP)
                 .build();
 
         when(memberService.getMemberByMemberId("testId")).thenReturn(java.util.Optional.of(responseDto));

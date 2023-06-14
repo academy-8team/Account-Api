@@ -13,31 +13,29 @@
 package com.nhnacademy.account.dto;
 
 import com.nhnacademy.account.entity.MemberGrade;
-import com.nhnacademy.account.entity.MemberStatus;
+import com.nhnacademy.account.entity.MemberState;
 import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
+@Data
 public class MemberRequestDto {
-
-    @NotBlank(message = "ID를 입력하세요")
+    @NotBlank(message = "Id는 필수 입력값 입니다.")
+    @Size(min = 4, max=15, message = "Id를 4 ~ 15자 사이로 입력해주세요")
     private String memberId;
 
-    @NotBlank(message = "Password를 입력하세요")
+    @NotBlank(message = "Password는 필수 입력값 입니다.")
+    @Size(max = 255)
     private String memberPassword;
 
     @Email(message = "email 형식을 지켜주세요.")
     private String memberEmail;
 
-    @NotNull(message = "멤버 등급을 선택하세요")
     private MemberGrade memberGrade;
 
-    @NotNull(message = "멤버 상태를 선택하세요")
-    private MemberStatus memberStatus;
+    private MemberState memberState;
 }
+

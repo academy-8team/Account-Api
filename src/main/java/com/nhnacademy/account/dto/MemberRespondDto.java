@@ -12,33 +12,18 @@
 
 package com.nhnacademy.account.dto;
 
-import com.nhnacademy.account.entity.Member;
 import com.nhnacademy.account.entity.MemberGrade;
-import com.nhnacademy.account.entity.MemberStatus;
+import com.nhnacademy.account.entity.MemberState;
 import lombok.*;
 
 @Builder
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
-public class MemberResponseDto {
-
+public class MemberRespondDto {
     private Long memberNum;
     private String memberId;
     private String memberPassword;
     private String memberEmail;
     private MemberGrade memberGrade;
-    private MemberStatus memberStatus;
-
-    public static MemberResponseDto of(Member member) {
-        return MemberResponseDto.builder()
-                .memberNum(member.getMemberNum())
-                .memberId(member.getMemberId())
-                .memberPassword(member.getMemberPassword())
-                .memberEmail(member.getMemberEmail())
-                .memberGrade(member.getMemberGrade())
-                .memberStatus(member.getMemberStatus())
-                .build();
-    }
+    private MemberState memberState;
 }
