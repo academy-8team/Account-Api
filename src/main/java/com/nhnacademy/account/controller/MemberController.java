@@ -13,46 +13,45 @@
 package com.nhnacademy.account.controller;
 
 import com.nhnacademy.account.dto.MemberRequestDto;
-import com.nhnacademy.account.dto.MemberResponseDto;
+import com.nhnacademy.account.dto.MemberRespondDto;
 import com.nhnacademy.account.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @RequiredArgsConstructor
 @RestController
 public class MemberController {
+
     private final MemberService memberService;
 
     @GetMapping("/member")
-    public ResponseEntity<MemberResponseDto> getMember(@RequestParam(value = "username") String memberId) {
-        return memberService.getMemberByMemberId(memberId)
-                .map(member -> ResponseEntity.ok().body(member))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Optional<MemberRespondDto>> getMember(@RequestParam(value = "username") String memberId) {
+        return new ResponseEntity<>(memberService.getMemberByMemberId(memberId), HttpStatus.OK);
     }
 
     @GetMapping("/member/exist")
-    public ResponseEntity<MemberResponseDto> checkMemberHaveEmail(@RequestParam(value = "email") String email) {
-        return memberService.findMemberHaveEmail(email)
-                .map(member -> ResponseEntity.ok().body(member))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Optional<MemberRespondDto>> checkMemberHaveEmail(@RequestParam(value = "email") String email) {
+        return new ResponseEntity<>(memberService.findMemberHaveEmail(email), HttpStatus.OK);
     }
 
     @PostMapping("/member/register")
     public ResponseEntity<String> registerMember(@RequestBody @Valid MemberRequestDto memberRequestDto, BindingResult errors) {
-        if (memberService.validCheck(errors)) {
-            return ResponseEntity.badRequest().body(memberService.makeErrorMessage(errors));
+        if (errors.hasErrors()) {
+            return new ResponseEntity<>(memberService.makeErrorMessage(errors), HttpStatus.BAD_REQUEST);
         }
-
-        return ResponseEntity.ok().body(memberService.register(memberRequestDto));
+        return new ResponseEntity<>(memberService.register(memberRequestDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/member/all")
-    public List<MemberResponseDto> findAllMember() {
-        return memberService.findAllMember();
+    public ResponseEntity<List<MemberRespondDto>> findAllMember() {
+        return new ResponseEntity<>(memberService.findAllMember(), HttpStatus.OK);
     }
 }

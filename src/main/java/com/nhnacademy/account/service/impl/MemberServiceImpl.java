@@ -10,12 +10,15 @@
  * 2023/06/06                ichunghui             최초 생성
  */
 
-package com.nhnacademy.account.service;
+package com.nhnacademy.account.service.impl;
 
 import com.nhnacademy.account.dto.MemberRequestDto;
-import com.nhnacademy.account.dto.MemberResponseDto;
+import com.nhnacademy.account.dto.MemberRespondDto;
 import com.nhnacademy.account.entity.Member;
+import com.nhnacademy.account.entity.MemberGrade;
+import com.nhnacademy.account.entity.MemberState;
 import com.nhnacademy.account.repository.MemberRepository;
+import com.nhnacademy.account.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,33 +33,29 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
-    public Optional<MemberResponseDto> getMemberByMemberId(String memberId) {
-        return Optional.ofNullable(memberRepository.findByMemberId(memberId))
-                .map(MemberResponseDto::of);
+    public Optional<MemberRespondDto> getMemberByMemberId(String memberId) {
+        return Optional.ofNullable(memberRepository.findByMemberId(memberId));
     }
 
-    @Transactional
     @Override
-    public Optional<MemberResponseDto> findMemberHaveEmail(String email) {
-        return Optional.ofNullable(memberRepository.findByMemberEmail(email))
-                .map(MemberResponseDto::of);
+    public Optional<MemberRespondDto> findMemberHaveEmail(String email) {
+        return Optional.ofNullable(memberRepository.findByMemberEmail(email));
     }
 
-
-    @Transactional
     @Override
     public String register(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
                 .memberId(memberRequestDto.getMemberId())
                 .memberPassword(memberRequestDto.getMemberPassword())
                 .memberEmail(memberRequestDto.getMemberEmail())
-                .memberGrade(memberRequestDto.getMemberGrade())
-                .memberStatus(memberRequestDto.getMemberStatus())
+                .memberGrade(MemberGrade.ROLE_USER)
+                .memberState(MemberState.MEMBER_MEMBERSHIP)
                 .build();
 
         memberRepository.save(member);
@@ -64,26 +63,26 @@ public class MemberServiceImpl implements MemberService {
         return "회원가입 되었습니다.";
     }
 
-    @Transactional
+    @Override
+    public List<MemberRespondDto> findAllMember() {
+        return memberRepository.findAllBy();
+    }
+
     @Override
     public boolean validCheck(BindingResult errors) {
         return errors.hasErrors();
     }
 
-    @Transactional
     @Override
     public String makeErrorMessage(BindingResult errors) {
+        String errorMessage;
         Map<String, String> validatorResult = validateHandling(errors);
-        return validatorResult.keySet().stream().findFirst().map(validatorResult::get).orElse("");
-    }
 
-    @Transactional
-    @Override
-    public List<MemberResponseDto> findAllMember() {
-        return memberRepository.findAllBy()
-                .stream()
-                .map(MemberResponseDto::of)
-                .collect(Collectors.toList());
+        errorMessage = validatorResult.keySet()
+                .stream().map(key -> key + ": " + validatorResult.get(key) + "; ")
+                .collect(Collectors.joining());
+
+        return errorMessage;
     }
 
     private Map<String, String> validateHandling(BindingResult errors) {

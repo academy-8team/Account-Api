@@ -1,0 +1,14 @@
+### 멤버 가입
+POST localhost:8080/members
+
+###  멤버 목록을 응답
+GET localhost:8080/members
+
+### 멤버 삭제
+DELETE localhost:8080/members
+
+### 멤버 수정
+PUT localhost:8080/members
+
+### 멤버 상세 내용 응답
+GET localhost:8080/members/{member-id}

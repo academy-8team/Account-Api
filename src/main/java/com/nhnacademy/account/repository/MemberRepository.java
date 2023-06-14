@@ -12,17 +12,18 @@
 
 package com.nhnacademy.account.repository;
 
+import com.nhnacademy.account.dto.MemberRespondDto;
 import com.nhnacademy.account.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 
-@Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Member findByMemberId(String memberId);
-    Member findByMemberEmail(String email);
-    List<Member> findAllBy();
+    MemberRespondDto findByMemberId(String memberId);
+
+    MemberRespondDto findByMemberEmail(String email);
+
+    List<MemberRespondDto> findAllBy();
 }
-// 마르코님한테  질문, Dto의 사용범위는 어디까지인가? Controller와 Service의 사이에서만 사용해야하는가
+

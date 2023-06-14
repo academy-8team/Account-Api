@@ -19,11 +19,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberService {
-    Optional<MemberResponseDto> getMemberByMemberId(String memberId);
+    Optional<MemberRespondDto> getMemberByMemberId(String memberId);
 
-    Optional<MemberResponseDto> findMemberHaveEmail(String email);
-
-    List<MemberResponseDto> findAllMember();
+    Optional<MemberRespondDto> findMemberHaveEmail(String email);
 
     String register(MemberRequestDto memberRequestDto);
 
@@ -31,4 +29,5 @@ public interface MemberService {
 
     String makeErrorMessage(BindingResult errors);
 
+    List<MemberRespondDto> findAllMember();
 }
